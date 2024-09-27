@@ -1,0 +1,33 @@
+% Proyecto de comunicaciones
+% Grupo 
+% Daniel Alvarez 201911320
+% Nombre 2
+% Nombre 3
+
+%% Preprocesado
+
+filename = 'Fur-Elise.mp3';
+[y, Fs] = audioread(filename);
+channel1 = y(:,1);
+channel2 = y(:,2);
+total_t = length(y)./Fs;
+t = 0:total_t/(length(y)):total_t-total_t/length(y);
+
+%%
+
+sound(y,Fs)
+
+%% 
+
+clear sound
+
+%%
+
+plot(t,channel2)
+xlabel('tiempo (s)')
+ylabel('Amplitud')
+grid on 
+
+%% Fourier
+
+%% 

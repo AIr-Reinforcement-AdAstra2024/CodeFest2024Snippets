@@ -1,0 +1,55 @@
+% Proyecto de comunicaciones
+% Grupo 
+% Daniel Alvarez 201911320
+% Nombre 2
+% Nombre 3
+
+%% Preprocesado C = 64kbps y Bm = 11kHz
+
+filename = 'Fur-Elise.mp3';
+[y, Fs] = audioread(filename);
+channel1 = y(:,1);
+channel2 = y(:,2);
+total_t = length(y)./Fs;
+t = 0:total_t/(length(y)):total_t-total_t/length(y);
+
+%%
+
+filename = 'Fur-EliseC1.mp4';
+audiowrite(filename,channel1,Fs);
+
+%%
+
+sound(y,Fs)
+
+%% 
+
+clear sound
+
+%%
+
+plot(t,channel2)
+xlabel('tiempo (s)')
+ylabel('Amplitud')
+
+%% Fourier
+
+yf = abs(fftshift(fft(channel1))); %Transformada de Fourier
+L = length(yf);
+f = FF*((-L/2):((L-1)/2))/L;
+plot(f,yf)
+grid on 
+xlabel('Hz')
+ylabel('A')
+
+%% Conversion de archivo a binario
+
+fid = fopen('Fur-Elise.mp3', 'r');
+mp3_content = fread(fid, [1 10^4], '*uint8');
+fclose(fid);
+
+%% 
+
+for i = 1:length(mp3_content)
+    file(i*(8):i+7) = decimalToBinaryVector(mp3_content(i),8,'MSBFirst');
+end
